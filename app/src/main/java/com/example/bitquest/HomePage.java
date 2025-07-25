@@ -46,8 +46,6 @@ public class HomePage extends AppCompatActivity {
         TextView desctiptionConcettiA = concettiA.findViewById(R.id.cardDescription);
         desctiptionConcettiA.setText("Questa è la descrizione della categoria Concetti Avanzati di Informatica");
 
-
-
     }
     public void goToPuzzle(View view){
         LinearLayout category = (LinearLayout) view.getParent();

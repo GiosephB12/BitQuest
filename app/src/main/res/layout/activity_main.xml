@@ -4,18 +4,22 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/black">
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@mipmap/bitquest"
+        android:id="@+id/Image"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:src="@drawable/ic_logo"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
+        android:layout_marginTop="35dp"
         />
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:background="@drawable/signup"
+        android:layout_below="@id/Image"
         android:orientation="vertical"
         android:layout_centerInParent="true"
         android:padding="30dp">
@@ -33,31 +37,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Password"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"/>
         <EditText
             android:id="@+id/InputPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginBottom="30dp" />
         <Button
             android:id="@+id/SigIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:text="Accedi"
             android:textColor="@color/white"
             android:backgroundTint="@color/green_black"
-            android:onClick="Accesso"/>
+            android:onClick="Accesso" />
         <Button
             android:id="@+id/SignUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:text="Registrati"
             android:textColor="@color/white"
             android:backgroundTint="@color/green_black"
             android:onClick="Registrati"/>
-
     </LinearLayout>
 </RelativeLayout>
