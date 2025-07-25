@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/levelsPuzzle"
+    android:backgroundTint="@color/black"
+    tools:context=".LevelsPage">
+
+    <include layout="@layout/headers"
+        android:id="@+id/header"/>
+
+    <TextView
+        android:id="@+id/TitleCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/green_lime"
+        android:textSize="42sp"
+        android:layout_below="@id/header"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:fontFamily="@font/vt323" />
+
+    <TextView
+        android:id="@+id/Type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/green_lime"
+        android:textSize="32sp"
+        android:layout_below="@+id/TitleCategory"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:fontFamily="@font/vt323" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/navigation"
+        android:layout_below="@id/Type">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/facile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/green_smoth"
+                android:text="Facile"
+                android:textSize="30sp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/vt323" />
+
+            <FrameLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/frameLevels0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/normale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/green_smoth"
+                android:text="Normale"
+                android:textSize="30sp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/vt323" />
+
+            <FrameLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/frameLevels1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/difficile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/green_smoth"
+                android:text="Difficile"
+                android:textSize="30sp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/vt323" />
+
+            <FrameLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/frameLevels2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+    <include layout="@layout/navigation_bar"
+        android:id="@+id/navigation"/>
+</RelativeLayout>

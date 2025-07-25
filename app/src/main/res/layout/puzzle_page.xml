@@ -7,10 +7,43 @@
     android:backgroundTint="@color/black"
     tools:context=".PuzzlePage">
 
+    <include layout="@layout/headers"
+        android:id="@+id/header_title"/>
+
     <TextView
+        android:id="@+id/TitleCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Password"
-        android:textColor="@color/green_lime" />
+        android:textColor="@color/green_lime"
+        android:textSize="42sp"
+        android:layout_below="@id/header_title"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:fontFamily="@font/vt323" />
+    <TextView
+        android:id="@+id/SelectType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seleziona la tipologia:"
+        android:textColor="@color/green_lime"
+        android:textSize="32sp"
+        android:layout_below="@+id/TitleCategory"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:fontFamily="@font/vt323" />
+
+    <ListView
+        android:id="@+id/puzzleList"
+        android:layout_below="@id/SelectType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="30dp"
+        android:layout_margin="20dp"
+        android:padding="0dp" />
+
+    <include layout="@layout/navigation_bar"/>
 
 </RelativeLayout>
