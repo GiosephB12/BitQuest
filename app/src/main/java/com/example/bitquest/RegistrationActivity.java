@@ -2,6 +2,7 @@ package com.example.bitquest;
 
 import android.content.Intent;
 import android.widget.EditText;
+import android.content.SharedPreferences;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -86,6 +87,9 @@ public class RegistrationActivity extends AppCompatActivity {
             Toast.makeText(this, "Registrazione completata!", Toast.LENGTH_SHORT).show();
 
             // Ritorna alla schermata di login
+            SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+            prefs.edit().putBoolean("intro_after_signup", true).apply();
+
             Intent backToLogin = new Intent(getApplicationContext(), HomePage.class);
             startActivity(backToLogin);
             finish();
@@ -95,6 +99,5 @@ public class RegistrationActivity extends AppCompatActivity {
             Toast.makeText(this, "Errore durante la registrazione: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
-
 }
 

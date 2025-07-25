@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Check: se admin
         if (enteredEmail.equals("admin") && enteredPassword.equals("admin")) {
+            SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+            prefs.edit().putBoolean("intro_after_signup", true).apply();
             startActivity(new Intent(getApplicationContext(), HomePage.class));
             return;
         }

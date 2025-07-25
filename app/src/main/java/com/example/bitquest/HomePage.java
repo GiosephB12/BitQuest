@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
+import android.content.SharedPreferences;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -45,6 +44,17 @@ public class HomePage extends AppCompatActivity {
         textConcettiA.setText(concetti_avanzati);
         TextView desctiptionConcettiA = concettiA.findViewById(R.id.cardDescription);
         desctiptionConcettiA.setText("Questa è la descrizione della categoria Concetti Avanzati di Informatica");
+
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        boolean showIntro = prefs.getBoolean("intro_after_signup", false);
+
+        if (showIntro) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.home, new IntroFragment())
+                    .commit();
+
+            prefs.edit().putBoolean("intro_after_signup", false).apply();
+        }
 
     }
     public void goToPuzzle(View view){
