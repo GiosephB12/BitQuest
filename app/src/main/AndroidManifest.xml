@@ -47,6 +47,17 @@
             android:exported="true"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".AppuntiPage"
+            android:exported="true"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".ArchivioPage"
+            android:exported="true"
+            android:screenOrientation="portrait">
+        </activity>
 
     </application>
 

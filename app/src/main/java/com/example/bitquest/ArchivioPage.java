@@ -3,12 +3,12 @@ package com.example.bitquest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,25 +16,23 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class ProfiloPage extends AppCompatActivity {
+public class ArchivioPage extends AppCompatActivity {
     String email, password;
+    private GridLayout gridLayout;
+    private static final int NUM_ITEMS = 18;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.profilo_page);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.profilo), (v, insets) -> {
+        setContentView(R.layout.archivio_page);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.archvio_layout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        TextView nozioni = findViewById(R.id.edit_nozioni);
-        TextView appunti = findViewById(R.id.edit_appunti);
-        TextView livelli = findViewById(R.id.edit_livelli);
-        LinearLayout logout = findViewById(R.id.logout_container);
-
-        //Gestione del nickname
         SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
 
         Intent nicknameIntent = getIntent();
@@ -44,41 +42,61 @@ public class ProfiloPage extends AppCompatActivity {
         TextView nickname = findViewById(R.id.nicknameText);
         String nicknamePref = prefs.getString("nickname", "");
 
-        if(email.equals("admin") && password.equals("admin")) {
+        if (email.equals("admin") && password.equals("admin")) {
             nickname.setText("Admin");
-        }
-        else
+        } else {
             nickname.setText(nicknamePref);
+        }
 
+        gridLayout = findViewById(R.id.grid_layout);
+        populateGrid();
 
         ImageView logo = findViewById(R.id.logoImage);
         logo.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProfiloPage.this, HomePage.class);
+                Intent intent = new Intent(ArchivioPage.this, HomePage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("email", email);       // Passa email
-                intent.putExtra("password", password); // Passa password
+                intent.putExtra("email", email); //passa email
+                intent.putExtra("password", password); //passa password
                 startActivity(intent);
                 finish();
             }
         });
     }
 
-    public void Logout(View view) {
-        try {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Errore: " + e.getMessage(), Toast.LENGTH_LONG).show();
+    private void populateGrid() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        for (int i = 0; i < NUM_ITEMS; i++) {
+            View itemView = inflater.inflate(R.layout.grid_item, gridLayout, false);
+
+            itemView.post(() -> {
+                int width = itemView.getWidth();
+                ViewGroup.LayoutParams params = itemView.getLayoutParams();
+                params.height = width;
+                itemView.setLayoutParams(params);
+            });
+
+            ImageView image = itemView.findViewById(R.id.item_image);
+            image.setImageResource(R.drawable.ic_lock);
+
+            gridLayout.addView(itemView);
         }
     }
+
     public void goBack(View view){
         finish();
+    }
+
+    public void goToProfilo(View view){
+        Intent ProfilePage = new Intent(getApplicationContext(), ProfiloPage.class);
+        //aggiunto per controllo nickname
+        ProfilePage.putExtra("email", email);
+        ProfilePage.putExtra("password", password);
+
+        startActivity(ProfilePage);
     }
 
     public void goToAppunti(View view){
@@ -88,13 +106,5 @@ public class ProfiloPage extends AppCompatActivity {
 
         startActivity(intent);
     }
-
-    public void goToArchivio(View view){
-        Intent ProfilePage = new Intent(getApplicationContext(), ArchivioPage.class);
-        //aggiunto per controllo nickname
-        ProfilePage.putExtra("email", email);
-        ProfilePage.putExtra("password", password);
-
-        startActivity(ProfilePage);
-    }
 }
+

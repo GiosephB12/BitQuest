@@ -15,7 +15,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:onClick="goToAppunti">
 
             <ImageView
                 android:layout_width="55dp"
@@ -58,7 +59,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:onClick="goToArchivio">
 
             <ImageView
                 android:layout_width="55dp"

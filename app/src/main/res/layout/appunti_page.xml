@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/appunti_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:padding="16dp">
+
+    <!-- Header -->
+    <include
+        android:id="@+id/header_title"
+        layout="@layout/headers" />
+
+    <!-- Titolo -->
+    <TextView
+        android:id="@+id/titolo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I miei Appunti"
+        android:textColor="#AFFF00"
+        android:textSize="35dp"
+        android:fontFamily="@font/vt323"
+        android:layout_below="@id/header_title"
+        android:layout_centerHorizontal="true" />
+
+    <!-- ScrollView con GridLayout 3x3 -->
+    <ScrollView
+        android:id="@+id/grid_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titolo"
+        android:layout_above="@id/navigation_bar"
+        android:fillViewport="true"
+        android:layout_marginTop="16dp">
+
+        <GridLayout
+            android:id="@+id/grid_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:orientation="horizontal"
+            android:alignmentMode="alignMargins"
+            android:useDefaultMargins="true"
+            android:padding="4dp" />
+    </ScrollView>
+
+    <!-- Navigation Bar -->
+    <include
+        layout="@layout/navigation_bar"
+        android:id="@+id/navigation_bar" />
+</RelativeLayout>

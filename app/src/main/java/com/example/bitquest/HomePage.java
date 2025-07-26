@@ -96,4 +96,22 @@ public class HomePage extends AppCompatActivity {
 
         startActivity(ProfilePage);
     }
+
+    public void goToAppunti(View view){
+        Intent intent = new Intent(getApplicationContext(), AppuntiPage.class);
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
+
+        startActivity(intent);
+    }
+
+    public void goToArchivio(View view){
+        Intent ProfilePage = new Intent(getApplicationContext(), ArchivioPage.class);
+        //aggiunto per controllo nickname
+        ProfilePage.putExtra("email", email);
+        ProfilePage.putExtra("password", password);
+
+        startActivity(ProfilePage);
+    }
+
 }
