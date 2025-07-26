@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/game"
+    android:background="@color/black"
+    tools:context=".GamePage">
+
+    <include layout="@layout/headers"
+        android:id="@+id/header_game"/>
+
+    <RelativeLayout
+        android:layout_below="@id/header_game"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/green_lime"
+        android:layout_margin="20dp"
+        android:padding="16dp">
+
+            <TextView
+                android:id="@+id/livello"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Livello: 1"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="16dp"
+                android:fontFamily="@font/vt323"
+                android:textColor="@color/green_smoth"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                />
+
+
+            <LinearLayout
+                android:id="@+id/input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_below="@id/livello"
+                >
+
+            <LinearLayout
+                android:id="@+id/inputOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textSize="28sp"
+                    android:fontFamily="@font/vt323"
+                    android:textColor="@color/green_smoth"/>
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="10dp"
+                    android:background="#000000" />
+
+            </LinearLayout>
+
+                <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textSize="28sp"
+                    android:fontFamily="@font/vt323"
+                    android:textColor="@color/green_smoth"/>
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="10dp"
+                    android:background="#000000" />
+
+            </LinearLayout>
+
+
+            <!-- Segnali di ingresso a destra -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_marginLeft="50dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="28sp"
+                    android:fontFamily="@font/vt323"
+                    android:textColor="@color/green_smoth"/>
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="10dp"
+                    android:background="#000000" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="28sp"
+                        android:fontFamily="@font/vt323"
+                        android:textColor="@color/green_smoth"/>
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="10dp"
+                        android:background="#000000" />
+
+                </LinearLayout>
+            </LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/input"
+            android:layout_marginLeft="40dp" >
+
+                <FrameLayout
+                    android:id="@+id/positionOne"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"/>
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="30dp"
+                    android:background="#000000"
+                    android:layout_below="@id/positionOne"
+                    android:layout_centerInParent="true"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/secondLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/input"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40dp">
+        <FrameLayout
+            android:id="@+id/positionTwo"
+            android:layout_width="70dp"
+            android:layout_height="70dp" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="30dp"
+            android:background="#000000"
+            android:layout_below="@id/positionTwo"
+            android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/rightHorizontal"
+            android:layout_width="62dp"
+            android:layout_height="2dp"
+            android:layout_below="@id/secondLine"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="74dp"
+            android:background="#000000" />
+
+        <View
+            android:id="@+id/leftHorizontal"
+            android:layout_width="62dp"
+            android:layout_height="2dp"
+            android:layout_below="@id/secondLine"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="74dp"
+            android:background="#000000" />
+
+            <View
+                android:id="@+id/firstLineVertical"
+                android:layout_width="2dp"
+                android:layout_height="40dp"
+                android:background="#000000"
+                android:layout_below="@id/rightHorizontal"
+                android:layout_toEndOf="@id/rightHorizontal"/>
+
+            <TextView
+                android:id="@+id/valueRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="28sp"
+                android:fontFamily="@font/vt323"
+                android:textColor="@color/green_smoth"
+                android:layout_toLeftOf="@id/firstLineVertical"
+                android:layout_below="@id/rightHorizontal"
+                android:layout_marginTop="10dp"
+                />
+
+            <View
+                android:id="@+id/secondLineVertical"
+                android:layout_width="2dp"
+                android:layout_height="40dp"
+                android:background="#000000"
+                android:layout_below="@id/leftHorizontal"
+                android:layout_toStartOf="@id/leftHorizontal"/>
+
+            <TextView
+                android:id="@+id/valueLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="28sp"
+                android:fontFamily="@font/vt323"
+                android:textColor="@color/green_smoth"
+                android:layout_toRightOf="@id/secondLineVertical"
+                android:layout_below="@id/leftHorizontal"
+                android:layout_marginTop="10dp"/>
+
+        <RelativeLayout
+            android:id="@+id/Line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/firstLineVertical"
+            android:layout_centerInParent="true">
+            <FrameLayout
+                android:id="@+id/positionThree"
+                android:layout_width="70dp"
+                android:layout_height="70dp"/>
+
+            <View
+                android:id="@+id/lineVertical"
+                android:layout_width="2dp"
+                android:layout_height="268dp"
+                android:background="#000000"
+                android:layout_below="@id/positionThree"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/destination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/dotted_line"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="25dp">
+
+
+            <ImageView
+                android:id="@+id/lamp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/lampadina"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="Lampadina" />
+
+            <View
+                android:id="@+id/finalLine"
+                android:layout_width="2dp"
+                android:layout_height="50dp"
+                android:background="#000000"
+                android:layout_below="@id/lamp"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/finalValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:fontFamily="@font/vt323"
+                android:textColor="@color/green_smoth"
+                android:textSize="28sp"
+                android:layout_below="@id/lamp"
+                android:layout_toLeftOf="@id/finalLine"/>
+
+
+        </RelativeLayout>
+            <View
+                android:id="@+id/thirdLineVertical"
+                android:layout_width="145dp"
+                android:layout_height="2dp"
+                android:background="#000000"
+                android:layout_above="@id/dotted_line"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="35dp"
+                android:layout_marginBottom="25dp"/>
+
+        <!-- Dotted line (linea tratteggiata) -->
+            <ImageView
+                android:id="@+id/dotted_line"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:src="@drawable/dotted_line"
+                android:layout_above="@id/porte_logiche"/>
+
+        <!-- Sezione inferiore con le porte AND e OR -->
+            <LinearLayout
+                android:id="@+id/porte_logiche"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_alignParentBottom="true">
+
+            <!-- Porta AND -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/and_gate"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/and_gate"
+                        android:contentDescription="Porta AND" />
+
+                    <TextView
+                        android:id="@+id/num_and"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AND X2"
+                        android:textSize="26sp"
+                        android:fontFamily="@font/vt323"
+                        android:textColor="@color/green_smoth"/>
+                </LinearLayout>
+
+            <!-- Porta OR -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/or_gate"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/or_gate"
+                        android:contentDescription="Porta OR" />
+
+                    <TextView
+                        android:id="@+id/num_or"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="OR X1"
+                        android:textSize="26sp"
+                        android:fontFamily="@font/vt323"
+                        android:textColor="@color/green_smoth" />
+                </LinearLayout>
+            </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -43,6 +43,11 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name=".GamePage"
+            android:exported="true"
+            android:screenOrientation="portrait">
+        </activity>
+    <activity
             android:name=".ProfiloPage"
             android:exported="true"
             android:screenOrientation="portrait">

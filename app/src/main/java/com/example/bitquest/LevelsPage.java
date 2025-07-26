@@ -68,6 +68,7 @@ public class LevelsPage extends AppCompatActivity {
         for (int i=0; i<3; i++){
             Fragment livello = new Levels();
             ((Levels) livello).setLivelli(levels[i]);
+            ((Levels) livello).setType(type);
             String str_id = String.format("frameLevels%d",i);
             int containerId = getResources().getIdentifier(str_id, "id", getPackageName());
             ft.add(containerId, livello, null);
