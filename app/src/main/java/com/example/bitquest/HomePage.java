@@ -2,6 +2,7 @@ package com.example.bitquest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ public class HomePage extends AppCompatActivity {
     private String problem_solving ="Problem Solving";
     private String concetti_base = "Concetti Base di Informatica";
     private String concetti_avanzati = "Concetti Avanzati di Informatica";
+    private String email, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +47,25 @@ public class HomePage extends AppCompatActivity {
         TextView desctiptionConcettiA = concettiA.findViewById(R.id.cardDescription);
         desctiptionConcettiA.setText("Questa è la descrizione della categoria Concetti Avanzati di Informatica");
 
+        //SharedPreferences
         SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         boolean showIntro = prefs.getBoolean("intro_after_signup", false);
 
+        //Gestione del nickname
+        Intent nicknameIntent = getIntent();
+        email = nicknameIntent.getStringExtra("email");
+        password = nicknameIntent.getStringExtra("password");
+
+        TextView nickname = findViewById(R.id.nicknameText);
+        String nicknamePref = prefs.getString("nickname", "");
+
+        if(email.equals("admin") && password.equals("admin")) {
+            nickname.setText("Admin");
+        }
+        else
+            nickname.setText(nicknamePref);
+
+        //controllo per l'intro della mascotte
         if (showIntro) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.home, new IntroFragment())
@@ -61,8 +79,21 @@ public class HomePage extends AppCompatActivity {
         LinearLayout category = (LinearLayout) view.getParent();
         TextView titleCategory = category.findViewById(R.id.cardTitle);
         String title = "" + titleCategory.getText();
+
         Intent puzzlePage = new Intent(getApplicationContext(), PuzzlePage.class);
         puzzlePage.putExtra("CATEGORY", title);
+        //aggiunto per controllo nickname
+        puzzlePage.putExtra("email", email);
+        puzzlePage.putExtra("password", password);
         startActivity(puzzlePage);
+    }
+
+    public void goToProfilo(View view){
+        Intent ProfilePage = new Intent(getApplicationContext(), ProfiloPage.class);
+        //aggiunto per controllo nickname
+        ProfilePage.putExtra("email", email);
+        ProfilePage.putExtra("password", password);
+
+        startActivity(ProfilePage);
     }
 }

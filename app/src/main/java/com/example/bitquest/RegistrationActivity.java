@@ -86,12 +86,15 @@ public class RegistrationActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Registrazione completata!", Toast.LENGTH_SHORT).show();
 
-            // Ritorna alla schermata di login
+            //Valore booleano per l'intro della mascotte
             SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
             prefs.edit().putBoolean("intro_after_signup", true).apply();
 
-            Intent backToLogin = new Intent(getApplicationContext(), HomePage.class);
-            startActivity(backToLogin);
+            // Vai alla schermata Home
+            Intent homePageIntent = new Intent(getApplicationContext(), HomePage.class);
+            homePageIntent.putExtra("email", enteredEmail);
+            homePageIntent.putExtra("password", enteredPassword);
+            startActivity(homePageIntent);
             finish();
 
         } catch (Exception e) {

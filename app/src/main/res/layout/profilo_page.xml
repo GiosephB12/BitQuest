@@ -1,0 +1,158 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profilo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:padding="16dp">
+
+    <!-- Header -->
+    <include
+        android:id="@+id/header_title"
+        layout="@layout/headers" />
+
+    <TextView
+        android:layout_below="@+id/header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Il mio profilo"
+        android:fontFamily="@font/vt323"
+        android:textColor="@color/green_lime"
+        android:textSize="35dp" />
+
+    <!-- Contenuto principale -->
+    <LinearLayout
+        android:id="@+id/info_container"
+        android:layout_below="@id/header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="60dp">
+
+        <!-- Nozioni -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Numero di nozioni sbloccate:"
+                android:textColor="@color/green_smoth"
+                android:fontFamily="@font/vt323"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/edit_nozioni"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:textColor="@color/green_smoth"
+                android:fontFamily="@font/vt323"
+                android:text="0"
+                android:inputType="number"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <!-- Appunti -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Numero di appunti sbloccati:"
+                android:textColor="@color/green_smoth"
+                android:fontFamily="@font/vt323"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/edit_appunti"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:textColor="@color/green_smoth"
+                android:fontFamily="@font/vt323"
+                android:text="0"
+                android:inputType="number"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <!-- Livelli -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Numero di livelli superati:"
+                android:textColor="@color/green_smoth"
+                android:fontFamily="@font/vt323"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/edit_livelli"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:textColor="@color/green_smoth"
+                android:fontFamily="@font/vt323"
+                android:text="0"
+                android:inputType="number"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Logout in basso a sinistra -->
+    <LinearLayout
+        android:id="@+id/logout_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_above="@id/navigation_bar"
+        android:onClick="Logout">
+
+        <ImageButton
+            android:id="@+id/logOut"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_esc"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:contentDescription="Log out" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log out"
+            android:textColor="@color/green_smoth"
+            android:fontFamily="@font/vt323"
+            android:textSize="30sp"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <!-- Navigation bar in fondo -->
+    <include
+        layout="@layout/navigation_bar"
+        android:id="@+id/navigation_bar"/>
+
+</RelativeLayout>

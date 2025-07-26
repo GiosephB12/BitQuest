@@ -53,9 +53,12 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // Check: se admin
+        // Check se admin
         if (enteredEmail.equals("admin") && enteredPassword.equals("admin")) {
-            startActivity(new Intent(getApplicationContext(), HomePage.class));
+            Intent homePage = new Intent(getApplicationContext(), HomePage.class);
+            homePage.putExtra("email", enteredEmail);
+            homePage.putExtra("password", enteredPassword);
+            startActivity(homePage);
             return;
         }
 
@@ -67,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         if (enteredEmail.equals(savedEmail) && enteredPassword.equals(savedPassword)) {
             try {
                 Intent homePage = new Intent(getApplicationContext(), HomePage.class);
+                homePage.putExtra("email", enteredEmail);
+                homePage.putExtra("password", enteredPassword);
                 startActivity(homePage);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -76,5 +81,4 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Email o password non corretti", Toast.LENGTH_SHORT).show();
         }
     }
-
 }

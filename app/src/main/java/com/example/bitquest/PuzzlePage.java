@@ -1,6 +1,8 @@
 package com.example.bitquest;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.nio.channels.InterruptedByTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +26,8 @@ public class PuzzlePage extends AppCompatActivity {
     public List<String> problemSolving= new ArrayList<>();
     public List<String> concettiB= new ArrayList<>();
     public List<String> concettiA = new ArrayList<>();
-    public String category;
+    public String category, email, password;
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +69,21 @@ public class PuzzlePage extends AppCompatActivity {
             customAdapter.add(s);
         }
 
+        //Gestione del nickname
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+
+         email = intent.getStringExtra("email");
+         password = intent.getStringExtra("password");
+
+        TextView nickname = findViewById(R.id.nicknameText);
+        String nicknamePref = prefs.getString("nickname", "");
+
+        if(email.equals("admin") && password.equals("admin")) {
+            nickname.setText("Admin");
+        }
+        else
+            nickname.setText(nicknamePref); //Fine controllo
+
         ImageView logo = findViewById(R.id.logoImage);
         logo.setOnClickListener(new View.OnClickListener() {
 
@@ -72,6 +91,8 @@ public class PuzzlePage extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(PuzzlePage.this, HomePage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("email", email); //passa email
+                intent.putExtra("password", password); //passa password
                 startActivity(intent);
                 finish();
             }
@@ -84,9 +105,22 @@ public class PuzzlePage extends AppCompatActivity {
         Intent levelPage = new Intent(getApplicationContext(), LevelsPage.class);
         levelPage.putExtra("CATEGORY", category);
         levelPage.putExtra("TYPE", typePuzzle);
+
+        //invio email e password a LevelsPage
+        levelPage.putExtra("email", email);
+        levelPage.putExtra("password", password);
         startActivity(levelPage);
     }
     public void goBack(View view){
         finish();
+    }
+
+    public void goToProfilo(View view){
+        Intent ProfilePage = new Intent(getApplicationContext(), ProfiloPage.class);
+        //aggiunto per controllo nickname
+        ProfilePage.putExtra("email", email);
+        ProfilePage.putExtra("password", password);
+
+        startActivity(ProfilePage);
     }
 }

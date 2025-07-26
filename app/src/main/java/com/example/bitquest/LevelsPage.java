@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class LevelsPage extends AppCompatActivity {
     public String category;
     public String type;
+    public String email, password;
     public int[][] levels = new int[3][10];
 
     @Override
@@ -44,6 +46,21 @@ public class LevelsPage extends AppCompatActivity {
         TextView titleCategory = findViewById(R.id.TitleCategory);
         TextView typePuzzle = findViewById(R.id.Type);
 
+        //Controllo del nickname
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+
+        email = level.getStringExtra("email");
+        password = level.getStringExtra("password");
+
+        TextView nickname = findViewById(R.id.nicknameText);
+        String nicknamePref = prefs.getString("nickname", "");
+
+        if(email.equals("admin") && password.equals("admin")) {
+            nickname.setText("Admin");
+        }
+        else
+            nickname.setText(nicknamePref); //Fine controllo
+
         titleCategory.setText(category);
         typePuzzle.setText(type);
         FragmentManager fm = getFragmentManager();
@@ -57,7 +74,6 @@ public class LevelsPage extends AppCompatActivity {
         }
         ft.commit();
 
-
         ImageView logo = findViewById(R.id.logoImage);
         logo.setOnClickListener(new View.OnClickListener() {
 
@@ -65,6 +81,8 @@ public class LevelsPage extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LevelsPage.this, HomePage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("email", email);       // Passa email
+                intent.putExtra("password", password); // Passa password
                 startActivity(intent);
                 finish();
             }
@@ -73,5 +91,13 @@ public class LevelsPage extends AppCompatActivity {
 
     public void goBack(View view){
         finish();
+    }
+    public void goToProfilo(View view){
+        Intent ProfilePage = new Intent(getApplicationContext(), ProfiloPage.class);
+        //aggiunto per controllo nickname
+        ProfilePage.putExtra("email", email);
+        ProfilePage.putExtra("password", password);
+
+        startActivity(ProfilePage);
     }
 }
