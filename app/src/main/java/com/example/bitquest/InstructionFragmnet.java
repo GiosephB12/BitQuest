@@ -1,6 +1,10 @@
 package com.example.bitquest;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import androidx.fragment.app.Fragment;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,8 +47,10 @@ public class InstructionFragmnet extends Fragment {
             step++;
             if (step < messages.length) {
                 message.setText(messages[step]);
+                SharedPreferences prefs = requireActivity().getSharedPreferences("notes", MODE_PRIVATE);
+                prefs.edit().putBoolean("notion_" + 0, true).apply();
+                prefs.edit().putBoolean("notion_" + 1, true).apply();
             } else {
-                // Rimuovi il fragment
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .remove(this)
                         .commit();

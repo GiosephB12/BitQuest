@@ -11,24 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class ArchivioFragment extends Fragment {
+public class AppuntiFragment extends Fragment {
 
     private int imageResId;
     private int pos;
-    private String[] descriptionNotions ={
-            "IBM (International Business Machines Corporation) è una " +
-            "multinazionale tecnologica americana fondata nel 1911. " +
-            "È specializzata in hardware, software, servizi IT e soluzioni" +
-            " di intelligenza artificiale. IBM è nota per le sue innovazioni storiche, " +
-            "come il mainframe, e per lo sviluppo della piattaforma di AI Watson.",
-            "Il primo bug informatico fu scoperto nel 1947 quando gli ingegneri del computer Harvard Mark II trovarono " +
-            "una falena bloccata in un relè. Annotarono l’evento nel registro come il " +
-            "\"first actual case of bug being found\", dando origine al termine \"bug\" in informatica. " +
-            "Da allora, il termine è usato per indicare errori nei programmi."
+    private String[] descriptionNote ={
+            "Le porte AND sono componenti logici fondamentali nell'elettronica digitale. " +
+            "Producono un'uscita alta (1) solo quando tutti i loro ingressi sono alti (1). " +
+            "Sono usate per eseguire operazioni logiche che richiedono condizioni simultanee.",
+            "Le porte OR sono componenti logici utilizzate nei circuiti digitali. Forniscono un'uscita alta (1) " +
+            "se almeno uno degli ingressi è alto (1)." +
+            " Sono utili per eseguire operazioni in cui basta una sola condizione vera."
     };
-    public ArchivioFragment() {
-        // Required empty public constructor
-    }
+    public AppuntiFragment() {}
 
 
     @Override
@@ -45,7 +40,7 @@ public class ArchivioFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.notion_fragment, container, false);
+        View view = inflater.inflate(R.layout.notes_fragment, container, false);
         ImageView curiosityImage = view.findViewById(R.id.image_notion);
         curiosityImage.setImageResource(imageResId);
         ImageView closeButton = view.findViewById(R.id.close_fragment);
@@ -53,13 +48,12 @@ public class ArchivioFragment extends Fragment {
             requireActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
-                    .remove(ArchivioFragment.this)
+                    .remove(AppuntiFragment.this)
                     .commit();
         });
-        TextView description = view.findViewById(R.id.notion_description);
-        description.setText(descriptionNotions[pos]);
+        TextView description = view.findViewById(R.id.note_description);
+        description.setText(descriptionNote[pos]);
         return view;
     }
 
 }
-

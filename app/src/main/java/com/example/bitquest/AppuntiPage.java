@@ -68,6 +68,7 @@ public class AppuntiPage extends AppCompatActivity {
 
     private void populateGrid() {
         LayoutInflater inflater = LayoutInflater.from(this);
+        SharedPreferences note = getSharedPreferences("notes", MODE_PRIVATE);
 
         for (int i = 0; i < NUM_ITEMS; i++) {
             View itemView = inflater.inflate(R.layout.grid_item, gridLayout, false);
@@ -80,8 +81,36 @@ public class AppuntiPage extends AppCompatActivity {
             });
 
             ImageView image = itemView.findViewById(R.id.item_image);
-            image.setImageResource(R.drawable.ic_lock);
+            boolean unlocked = note.getBoolean("notion_" + i, false);
 
+            int imageResId;
+            int pos;
+            if (unlocked) {
+                if (i == 0) {
+                    imageResId = R.drawable.and_gate;
+                } else if (i == 1) {
+                    imageResId = R.drawable.or_gate;
+                } else {
+                    imageResId = R.drawable.ic_lock;
+                }
+                image.setImageResource(imageResId);
+                pos=i;
+
+                itemView.setOnClickListener(v -> {
+                    AppuntiFragment fragment = new AppuntiFragment();
+                    Bundle args = new Bundle();
+                    args.putInt("image_res_id", imageResId);
+                    args.putInt("description", pos);
+                    fragment.setArguments(args);
+
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.appunti_layout, fragment)
+                            .commit();
+                });
+
+            } else {
+                imageResId = R.drawable.ic_lock;
+            }
             gridLayout.addView(itemView);
         }
     }
