@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/intro_overlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CC000000"
+    android:clickable="true"
+    android:focusable="true">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_gravity="bottom"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="120dp"
+        android:background="@drawable/finish_text">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/finish_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/green_lime"
+            android:textSize="28sp"
+            android:padding="5dp"
+            android:layout_gravity="top"
+            android:gravity="center|top"
+            android:text="Complimenti hai superato il\nLIVELLO: 1"
+            android:fontFamily="@font/vt323" />
+
+        <LinearLayout
+            android:id="@+id/votes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:layout_below="@id/finish_text"
+            android:layout_centerInParent="true">
+
+                <FrameLayout
+                    android:id="@+id/vote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/black"
+                    android:outlineSpotShadowColor="@color/black">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/green_lime"
+                    android:textSize="38sp"
+                    android:padding="5dp"
+                    android:layout_gravity="top"
+                    android:gravity="center|top"
+                    android:text="1"
+                    android:fontFamily="@font/vt323" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@color/black"
+                android:outlineSpotShadowColor="@color/black">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/green_lime"
+                    android:textSize="38sp"
+                    android:padding="5dp"
+                    android:layout_gravity="top"
+                    android:gravity="center|top"
+                    android:text="1"
+                    android:fontFamily="@font/vt323" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                android:outlineSpotShadowColor="@color/black">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/green_lime"
+                    android:textSize="38sp"
+                    android:padding="5dp"
+                    android:layout_gravity="top"
+                    android:gravity="center|top"
+                    android:text="1"
+                    android:fontFamily="@font/vt323" />
+            </FrameLayout>
+        </LinearLayout>
+            <FrameLayout
+                android:id="@+id/notion"
+                android:layout_width="match_parent"
+                android:layout_margin="20dp"
+                android:layout_below="@id/votes"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/notion_text_end_game">
+                <TextView
+                    android:id="@+id/notionText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/green_smoth"
+                    android:textSize="20sp"
+                    android:padding="10dp"
+                    android:text="..."
+                    android:fontFamily="@font/vt323" />
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:src="@drawable/ic_bmo"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="5dp" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal"
+                android:layout_below="@id/notion"
+                >
+
+                <FrameLayout
+                    android:layout_width="130dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/button_end_game"
+                    android:onClick="goBack">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/vt323"
+                        android:text="EXIT"
+                        android:layout_gravity="center"
+                        android:gravity="top|center"
+                        android:textColor="@color/green_smoth"
+                        android:textSize="30sp" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="130dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/button_end_game"
+                    android:onClick="nextLevel">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/vt323"
+                        android:text="NEXT"
+                        android:layout_gravity="center"
+                        android:gravity="top|center"
+                        android:textColor="@color/green_smoth"
+                        android:textSize="30sp" />
+
+                </FrameLayout>
+            </LinearLayout>
+
+    </RelativeLayout>
+
+
+    </FrameLayout>
+
+</RelativeLayout>

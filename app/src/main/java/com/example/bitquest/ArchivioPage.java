@@ -68,6 +68,7 @@ public class ArchivioPage extends AppCompatActivity {
 
     private void populateGrid() {
         LayoutInflater inflater = LayoutInflater.from(this);
+        SharedPreferences prefs = getSharedPreferences("curiosity_prefs", MODE_PRIVATE);
 
         for (int i = 0; i < NUM_ITEMS; i++) {
             View itemView = inflater.inflate(R.layout.grid_item, gridLayout, false);
@@ -80,11 +81,40 @@ public class ArchivioPage extends AppCompatActivity {
             });
 
             ImageView image = itemView.findViewById(R.id.item_image);
-            image.setImageResource(R.drawable.ic_lock);
+            boolean unlocked = prefs.getBoolean("curiosity_" + i, false);
 
+            int imageResId;
+            int pos;
+            if (unlocked) {
+                if (i == 0) {
+                    imageResId = R.drawable.ic_ibm;
+                } else if (i == 1) {
+                    imageResId = R.drawable.ic_bug;
+                } else {
+                    imageResId = R.drawable.ic_lock;
+                }
+                image.setImageResource(imageResId);
+                pos=i;
+
+                itemView.setOnClickListener(v -> {
+                    ArchivioFragment fragment = new ArchivioFragment();
+                    Bundle args = new Bundle();
+                    args.putInt("image_res_id", imageResId);
+                    args.putInt("description", pos);
+                    fragment.setArguments(args);
+
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.archvio_layout, fragment)
+                            .commit();
+                });
+
+            } else {
+                imageResId = R.drawable.ic_lock;
+            }
             gridLayout.addView(itemView);
         }
     }
+
 
     public void goBack(View view){
         finish();

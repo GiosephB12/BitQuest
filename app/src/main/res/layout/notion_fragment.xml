@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CC000000"
+    android:clickable="true"
+    android:focusable="true"
+    android:id="@+id/notion_frag">
+
+    <FrameLayout
+        android:layout_width="400dp"
+        android:layout_height="800dp"
+        android:layout_gravity="bottom"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="120dp"
+        android:background="@drawable/notion_text">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <FrameLayout
+                android:id="@+id/frame_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/square_background"
+                android:layout_margin="20dp">
+                <ImageView
+                    android:id="@+id/image_notion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+            </FrameLayout>
+            <TextView
+                android:id="@+id/notion_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_below="@id/frame_image"
+                android:text="..."
+                android:textColor="@color/green_smoth"
+                android:fontFamily="@font/vt323"
+                android:textSize="30dp"/>
+            <ImageView
+                android:id="@+id/close_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_exit"
+                android:layout_alignParentRight="true"
+                android:layout_margin="15dp"/>
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</RelativeLayout>

@@ -3,17 +3,23 @@ package com.example.bitquest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.view.ViewParent;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -176,34 +182,37 @@ public class GamePage extends AppCompatActivity {
                 target.removeAllViews();
                 target.addView(draggedView);
 
-                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.MATCH_PARENT,
-                        FrameLayout.LayoutParams.MATCH_PARENT
-                );
+                if (target.getChildCount() > 0) {
+                    target.removeAllViews();
+                }
+                target.addView(draggedView);
+
+                int sizeInDp = 70;
+                float scale = draggedView.getContext().getResources().getDisplayMetrics().density;
+                int sizePx = (int) (sizeInDp * scale + 0.5f);
+
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(sizePx, sizePx);
                 draggedView.setLayoutParams(params);
+                draggedView.setPivotX(sizePx / 2f);
+                draggedView.setPivotY(sizePx / 2f);
 
-                draggedView.setPivotX(draggedView.getWidth() / 2f);
-                draggedView.setPivotY(draggedView.getHeight() / 2f);
-
-                draggedView.setRotation(0f);
                 draggedView.setScaleX(0.5f);
                 draggedView.setScaleY(0.5f);
+                draggedView.setRotation(0f);
 
                 draggedView.animate()
-                        .rotation(90f)
-                        .x(0f)
-                        .y(0f)
+                        .x(3)
+                        .y(0)
                         .scaleX(1f)
                         .scaleY(1f)
+                        .rotation(90f)
                         .setDuration(500)
                         .start();
-
                 droppedInTarget = true;
                 break;
             }
         }
         String check = draggedView.getTag() != null ? draggedView.getTag().toString() : "UNKNOWN";
-        boolean valid=false;
         ViewParent parent = draggedView.getParent();
         if (((ViewGroup) parent).getId() == R.id.positionOne && check.equals("AND")){
             inputOne = findViewById(R.id.valueRight);
@@ -228,11 +237,11 @@ public class GamePage extends AppCompatActivity {
             if (type.equals("AND")) {
                 if (((ViewGroup) parent).getId() == R.id.positionOne){
                     updateGateCount(R.id.num_and,R.id.valueRight);
-                }else if(((ViewGroup) parent).getId() == R.id.positionTwo){
+                }
+                if(((ViewGroup) parent).getId() == R.id.positionTwo){
                     updateGateCount(R.id.num_and, 0);
-                }else if(((ViewGroup) parent).getId() == R.id.positionThree){
-                    updateGateCount(R.id.num_and, 0);
-                }else{
+                }
+                if(((ViewGroup) parent).getId() == R.id.positionThree){
                     updateGateCount(R.id.num_and, 0);
                 }
             } else if (type.equals("OR")) {
@@ -244,6 +253,11 @@ public class GamePage extends AppCompatActivity {
         if(checkOne.equals("1") && checkThree.equals("1") && validateSecondInput){
             ImageView lamp = findViewById(R.id.lamp);
             lamp.setImageResource(R.drawable.lamp_on);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.game, new FinishFragment())
+                        .commit();
+            }, 1000);
         }
     }
 
@@ -282,7 +296,55 @@ public class GamePage extends AppCompatActivity {
     }
 
 
+    public void nextLevel(View v){
+        View rootView = findViewById(R.id.intro_overlay);
 
+        if (rootView instanceof RelativeLayout) {
+            RelativeLayout parentLayout = (RelativeLayout) rootView;
+
+            FrameLayout overlay = new FrameLayout(getApplicationContext());
+            overlay.setBackgroundResource(R.drawable.intro_text);
+
+            TextView coomingSoon = new TextView(getApplicationContext());
+            coomingSoon.setText("Coming Soon");
+            coomingSoon.setTextColor(getResources().getColor(R.color.green_black));
+            Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.vt323);
+            coomingSoon.setTypeface(typeface);
+            coomingSoon.setTextSize(30);
+
+            FrameLayout.LayoutParams textParams = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT
+            );
+            textParams.gravity = Gravity.CENTER;
+            coomingSoon.setLayoutParams(textParams);
+            overlay.addView(coomingSoon);
+
+            ImageView closeIcon = new ImageView(getApplicationContext());
+            closeIcon.setImageResource(R.drawable.ic_exit);
+
+            int iconSize = 100;
+            FrameLayout.LayoutParams closeParams = new FrameLayout.LayoutParams(
+                    iconSize,
+                    iconSize
+            );
+            closeParams.gravity = Gravity.END | Gravity.TOP;
+            closeParams.setMargins(0, 16, 16, 0);
+            closeIcon.setLayoutParams(closeParams);
+
+            closeIcon.setOnClickListener(view -> parentLayout.removeView(overlay));
+            overlay.addView(closeIcon);
+
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.MATCH_PARENT, 250);
+            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+
+            overlay.setLayoutParams(layoutParams);
+
+            overlay.setClickable(true);
+            parentLayout.addView(overlay);
+        }
+    }
     public void goBack(View view) {
         finish();
     }
