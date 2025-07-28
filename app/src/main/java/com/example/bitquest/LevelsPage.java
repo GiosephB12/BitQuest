@@ -27,13 +27,14 @@ public class LevelsPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.levels_page);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.levelsPuzzle), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        int count = 1;
 
+        int count = 1;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 10; j++) {
                 levels[i][j] = count++;
@@ -43,79 +44,99 @@ public class LevelsPage extends AppCompatActivity {
         Intent level = getIntent();
         category = level.getStringExtra("CATEGORY");
         type = level.getStringExtra("TYPE");
-        TextView titleCategory = findViewById(R.id.TitleCategory);
-        TextView typePuzzle = findViewById(R.id.Type);
-
-        //Controllo del nickname
-        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
 
         email = level.getStringExtra("email");
         password = level.getStringExtra("password");
 
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+
+        TextView titleCategory = findViewById(R.id.TitleCategory);
+        TextView typePuzzle = findViewById(R.id.Type);
         TextView nickname = findViewById(R.id.nicknameText);
         String nicknamePref = prefs.getString("nickname", "");
 
-        if(email.equals("admin") && password.equals("admin")) {
+        if (email != null && email.equals("admin") && password != null && password.equals("admin")) {
             nickname.setText("Admin");
+        } else {
+            nickname.setText(nicknamePref);
         }
-        else
-            nickname.setText(nicknamePref); //Fine controllo
 
+        boolean introShown = prefs.getBoolean("introLevelsShown", false);
+
+        if(!introShown && !(email != null && email.equals("admin") && password != null && password.equals("admin"))){
+            String[] levelsIntroMessages = {
+                    "Perfetto! Ora scegli il livello\n di difficoltà che preferisci.",
+                    "Puoi iniziare da Facile,\n oppure\n metterti alla prova con:\n Normale o Difficile.",
+                    "Se è la tua prima volta,\n ti consiglio di partire\n da Facile.",
+                    "Pronto? L’avventura continua!"
+            };
+
+            // Lancia IntroFragment con messaggi
+            Bundle bundle = new Bundle();
+            bundle.putStringArray("MESSAGES", levelsIntroMessages);
+            IntroFragment introFragment = new IntroFragment();
+            introFragment.setArguments(bundle);
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.levelsPuzzle, introFragment)
+                    .commit();
+
+            // Salva che è stato mostrato
+            prefs.edit().putBoolean("introLevelsShown", true).apply();
+        }
+
+        // Imposta i titoli
         titleCategory.setText(category);
         typePuzzle.setText(type);
+
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        for (int i=0; i<3; i++){
+        for (int i = 0; i < 3; i++) {
             Fragment livello = new Levels();
             ((Levels) livello).setLivelli(levels[i]);
             ((Levels) livello).setType(type);
-            String str_id = String.format("frameLevels%d",i);
+            ((Levels) livello).setEmail(email);
+            ((Levels) livello).setPassword(password);
+
+            String str_id = String.format("frameLevels%d", i);
             int containerId = getResources().getIdentifier(str_id, "id", getPackageName());
             ft.add(containerId, livello, null);
         }
         ft.commit();
 
         ImageView logo = findViewById(R.id.logoImage);
-        logo.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LevelsPage.this, HomePage.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("email", email);       // Passa email
-                intent.putExtra("password", password); // Passa password
-                startActivity(intent);
-                finish();
-            }
+        logo.setOnClickListener(v -> {
+            Intent intent = new Intent(LevelsPage.this, HomePage.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("email", email);
+            intent.putExtra("password", password);
+            startActivity(intent);
+            finish();
         });
     }
 
-    public void goBack(View view){
+    public void goBack(View view) {
         finish();
     }
-    public void goToProfilo(View view){
-        Intent ProfilePage = new Intent(getApplicationContext(), ProfiloPage.class);
-        //aggiunto per controllo nickname
-        ProfilePage.putExtra("email", email);
-        ProfilePage.putExtra("password", password);
 
-        startActivity(ProfilePage);
-    }
-
-    public void goToAppunti(View view){
-        Intent intent = new Intent(getApplicationContext(), AppuntiPage.class);
+    public void goToProfilo(View view) {
+        Intent intent = new Intent(getApplicationContext(), ProfiloPage.class);
         intent.putExtra("email", email);
         intent.putExtra("password", password);
-
         startActivity(intent);
     }
 
-    public void goToArchivio(View view){
-        Intent ProfilePage = new Intent(getApplicationContext(), ArchivioPage.class);
-        //aggiunto per controllo nickname
-        ProfilePage.putExtra("email", email);
-        ProfilePage.putExtra("password", password);
+    public void goToAppunti(View view) {
+        Intent intent = new Intent(getApplicationContext(), AppuntiPage.class);
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
+        startActivity(intent);
+    }
 
-        startActivity(ProfilePage);
+    public void goToArchivio(View view) {
+        Intent intent = new Intent(getApplicationContext(), ArchivioPage.class);
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
+        startActivity(intent);
     }
 }

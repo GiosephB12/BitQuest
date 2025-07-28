@@ -43,6 +43,12 @@ public class FinishFragment extends Fragment {
         SharedPreferences prefs = requireActivity().getSharedPreferences("curiosity_prefs", MODE_PRIVATE);
         prefs.edit().putBoolean("curiosity_" + pos, true).apply();
 
-
+        SharedPreferences userPrefs = requireActivity().getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        int backCount = userPrefs.getInt("go_back_count", 0);
+        backCount++;
+        SharedPreferences.Editor editor = userPrefs.edit();
+        editor.putInt("unlocked_levels", backCount);
+        editor.apply();
+        
     }
 }

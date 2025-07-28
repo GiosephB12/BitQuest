@@ -2,6 +2,7 @@ package com.example.bitquest;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -46,6 +47,19 @@ public class GamePage extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Nickname setup
+        TextView nicknameText = findViewById(R.id.nicknameText); // Assicurati che esista nel layout
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String nickname = prefs.getString("nickname", "");
+        Intent nick = getIntent();
+        String email = nick.getStringExtra("email");
+        String password = nick.getStringExtra("password");
+
+        if (email != null && email.equals("admin") && password != null && password.equals("admin")) {
+            nicknameText.setText("Admin");
+        } else {
+            nicknameText.setText(nickname);
+        }
 
         ImageView logo = findViewById(R.id.logoImage);
         logo.setOnClickListener(v -> {
@@ -54,7 +68,8 @@ public class GamePage extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-        if(firstTime){
+
+        if (firstTime) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.game, new InstructionFragmnet())
                     .commit();
@@ -89,24 +104,19 @@ public class GamePage extends AppCompatActivity {
                     }
                 }
 
-                // Blocca duplicazione se è 0 o meno
                 if (num_gate <= 0) return false;
 
-                // Riduce il conteggio e aggiorna il TextView
                 num_gate--;
                 if (text.contains("AND")) {
                     replace.setText("AND X" + num_gate);
                 } else if (text.contains("OR")) {
                     replace.setText("OR X" + num_gate);
                 } else {
-                    replace.setText("X" + num_gate); // fallback
+                    replace.setText("X" + num_gate);
                 }
 
-                // Crea il clone
                 ImageView clone = new ImageView(this);
                 clone.setImageDrawable(((ImageView) v).getDrawable());
-
-                // Salva il tipo come tag per riconoscerlo dopo
                 clone.setTag(text.contains("AND") ? "AND" : text.contains("OR") ? "OR" : "UNKNOWN");
 
                 int width = v.getWidth();
@@ -120,7 +130,7 @@ public class GamePage extends AppCompatActivity {
                 clone.setX(event.getRawX() - width);
                 clone.setY(event.getRawY() - height);
 
-                setDragLogic(clone); // Gestisce trascinamento
+                setDragLogic(clone);
                 draggedView = clone;
 
                 return true;
@@ -182,11 +192,6 @@ public class GamePage extends AppCompatActivity {
                 target.removeAllViews();
                 target.addView(draggedView);
 
-                if (target.getChildCount() > 0) {
-                    target.removeAllViews();
-                }
-                target.addView(draggedView);
-
                 int sizeInDp = 70;
                 float scale = draggedView.getContext().getResources().getDisplayMetrics().density;
                 int sizePx = (int) (sizeInDp * scale + 0.5f);
@@ -214,43 +219,34 @@ public class GamePage extends AppCompatActivity {
         }
         String check = draggedView.getTag() != null ? draggedView.getTag().toString() : "UNKNOWN";
         ViewParent parent = draggedView.getParent();
-        if (((ViewGroup) parent).getId() == R.id.positionOne && check.equals("AND")){
-            inputOne = findViewById(R.id.valueRight);
+        if (((ViewGroup) parent).getId() == R.id.positionOne && check.equals("AND")) {
             inputOne.setText("1");
         }
-        if (((ViewGroup) parent).getId() == R.id.positionTwo && check.equals("AND")){
-            validateSecondInput=true;
+        if (((ViewGroup) parent).getId() == R.id.positionTwo && check.equals("AND")) {
+            validateSecondInput = true;
         }
-        if (((ViewGroup) parent).getId() == R.id.positionThree && check.equals("OR")){
-            inputThree = findViewById(R.id.finalValue);
+        if (((ViewGroup) parent).getId() == R.id.positionThree && check.equals("OR")) {
             inputThree.setText("1");
         }
 
-
         if (!droppedInTarget) {
-            if (parent != null && parent instanceof ViewGroup) {
+            if (parent instanceof ViewGroup) {
                 ((ViewGroup) parent).removeView(draggedView);
             }
 
             String type = draggedView.getTag() != null ? draggedView.getTag().toString() : "UNKNOWN";
 
             if (type.equals("AND")) {
-                if (((ViewGroup) parent).getId() == R.id.positionOne){
-                    updateGateCount(R.id.num_and,R.id.valueRight);
-                }
-                if(((ViewGroup) parent).getId() == R.id.positionTwo){
-                    updateGateCount(R.id.num_and, 0);
-                }
-                if(((ViewGroup) parent).getId() == R.id.positionThree){
+                if (((ViewGroup) parent).getId() == R.id.positionOne) {
+                    updateGateCount(R.id.num_and, R.id.valueRight);
+                } else {
                     updateGateCount(R.id.num_and, 0);
                 }
             } else if (type.equals("OR")) {
-                updateGateCount(R.id.num_or,R.id.finalValue);
+                updateGateCount(R.id.num_or, R.id.finalValue);
             }
         }
-        String checkOne = ""+inputOne.getText();
-        String checkThree = ""+inputThree.getText();
-        if(checkOne.equals("1") && checkThree.equals("1") && validateSecondInput){
+        if (inputOne.getText().toString().equals("1") && inputThree.getText().toString().equals("1") && validateSecondInput) {
             ImageView lamp = findViewById(R.id.lamp);
             lamp.setImageResource(R.drawable.lamp_on);
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
@@ -264,13 +260,13 @@ public class GamePage extends AppCompatActivity {
     private void updateGateCount(int textViewId, int textViewIdValue) {
         TextView replace = findViewById(textViewId);
         String text = replace.getText().toString();
-        if (textViewIdValue != 0){
+        if (textViewIdValue != 0) {
             TextView inputOne = findViewById(textViewIdValue);
             inputOne.setText("0");
             ImageView lamp = findViewById(R.id.lamp);
             lamp.setImageResource(R.drawable.lampadina);
         }
-        if(textViewId == 0){
+        if (textViewId == 0) {
             ImageView lamp = findViewById(R.id.lamp);
             lamp.setImageResource(R.drawable.lampadina);
         }
@@ -295,23 +291,19 @@ public class GamePage extends AppCompatActivity {
         }
     }
 
-
-    public void nextLevel(View v){
+    public void nextLevel(View v) {
         View rootView = findViewById(R.id.intro_overlay);
-
         if (rootView instanceof RelativeLayout) {
             RelativeLayout parentLayout = (RelativeLayout) rootView;
 
             FrameLayout overlay = new FrameLayout(getApplicationContext());
             overlay.setBackgroundResource(R.drawable.intro_text);
-
             TextView coomingSoon = new TextView(getApplicationContext());
             coomingSoon.setText("Coming Soon");
             coomingSoon.setTextColor(getResources().getColor(R.color.green_black));
             Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.vt323);
             coomingSoon.setTypeface(typeface);
             coomingSoon.setTextSize(30);
-
             FrameLayout.LayoutParams textParams = new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.WRAP_CONTENT,
                     FrameLayout.LayoutParams.WRAP_CONTENT
@@ -319,7 +311,6 @@ public class GamePage extends AppCompatActivity {
             textParams.gravity = Gravity.CENTER;
             coomingSoon.setLayoutParams(textParams);
             overlay.addView(coomingSoon);
-
             ImageView closeIcon = new ImageView(getApplicationContext());
             closeIcon.setImageResource(R.drawable.ic_exit);
 

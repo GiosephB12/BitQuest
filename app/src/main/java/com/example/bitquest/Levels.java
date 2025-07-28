@@ -23,8 +23,9 @@ import java.util.ArrayList;
 public class Levels extends Fragment implements View.OnClickListener {
     int[] livelli;
     String type;
+     String email;
+     String password;
     public Levels(){
-
     }
 
     public void setLivelli(int[] numeri) {
@@ -33,6 +34,8 @@ public class Levels extends Fragment implements View.OnClickListener {
     public void setType(String type){
         this.type = type;
     }
+    public void setEmail(String type) {this.email = type;}
+    public void setPassword(String type){this.password = type;}
 
     @Nullable
     @Override
@@ -60,6 +63,8 @@ public class Levels extends Fragment implements View.OnClickListener {
         if(number_level.equals("1") && type.equals("Circuit Caper")){
             Intent game = new Intent(getContext(), GamePage.class);
             game.putExtra("Level", number_level);
+            game.putExtra("email", email);
+            game.putExtra("password", password);
             startActivity(game);
         }else {
             View rootView = getActivity().findViewById(R.id.levelsPuzzle);

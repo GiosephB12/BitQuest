@@ -69,6 +69,7 @@ public class AppuntiPage extends AppCompatActivity {
     private void populateGrid() {
         LayoutInflater inflater = LayoutInflater.from(this);
         SharedPreferences note = getSharedPreferences("notes", MODE_PRIVATE);
+        int unlockedCount = 0; // nuovo contatore
 
         for (int i = 0; i < NUM_ITEMS; i++) {
             View itemView = inflater.inflate(R.layout.grid_item, gridLayout, false);
@@ -86,6 +87,8 @@ public class AppuntiPage extends AppCompatActivity {
             int imageResId;
             int pos;
             if (unlocked) {
+                unlockedCount++; // incremento contatore
+
                 if (i == 0) {
                     imageResId = R.drawable.and_gate;
                 } else if (i == 1) {
@@ -93,8 +96,9 @@ public class AppuntiPage extends AppCompatActivity {
                 } else {
                     imageResId = R.drawable.ic_lock;
                 }
+
                 image.setImageResource(imageResId);
-                pos=i;
+                pos = i;
 
                 itemView.setOnClickListener(v -> {
                     AppuntiFragment fragment = new AppuntiFragment();
@@ -111,9 +115,17 @@ public class AppuntiPage extends AppCompatActivity {
             } else {
                 imageResId = R.drawable.ic_lock;
             }
+
             gridLayout.addView(itemView);
         }
+
+        // Salva il contatore negli SharedPreferences
+        SharedPreferences userPrefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = userPrefs.edit();
+        editor.putInt("unlocked_count", unlockedCount);
+        editor.apply();
     }
+
 
     public void goBack(View view){
         finish();
@@ -135,5 +147,9 @@ public class AppuntiPage extends AppCompatActivity {
         ProfilePage.putExtra("password", password);
 
         startActivity(ProfilePage);
+    }
+
+    public void goToAppunti(View view){
+
     }
 }

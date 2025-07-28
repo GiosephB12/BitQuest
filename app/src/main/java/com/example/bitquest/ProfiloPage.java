@@ -29,9 +29,9 @@ public class ProfiloPage extends AppCompatActivity {
             return insets;
         });
 
-        TextView nozioni = findViewById(R.id.edit_nozioni);
-        TextView appunti = findViewById(R.id.edit_appunti);
-        TextView livelli = findViewById(R.id.edit_livelli);
+        TextView numNozioni = findViewById(R.id.edit_nozioni);
+        TextView numAppunti = findViewById(R.id.edit_appunti);
+        TextView numLivelli = findViewById(R.id.edit_livelli);
         LinearLayout logout = findViewById(R.id.logout_container);
 
         //Gestione del nickname
@@ -50,6 +50,9 @@ public class ProfiloPage extends AppCompatActivity {
         else
             nickname.setText(nicknamePref);
 
+        numNozioni.setText(String.valueOf(Utils.countUnlockedNotions(this)));
+        numAppunti.setText(String.valueOf(Utils.countUnlockedNotes(this)));
+        numLivelli.setText(String.valueOf(Utils.countUnlockedLevels(this)));
 
         ImageView logo = findViewById(R.id.logoImage);
         logo.setOnClickListener(new View.OnClickListener() {
@@ -96,5 +99,8 @@ public class ProfiloPage extends AppCompatActivity {
         ProfilePage.putExtra("password", password);
 
         startActivity(ProfilePage);
+    }
+
+    public void goToProfilo (View view){
     }
 }

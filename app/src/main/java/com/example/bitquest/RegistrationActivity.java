@@ -34,6 +34,7 @@ public class RegistrationActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         email = findViewById(R.id.InputEmail);
         password = findViewById(R.id.InputPassword);
         confermaPassword = findViewById(R.id.InputConfermaPassword);
@@ -44,15 +45,15 @@ public class RegistrationActivity extends AppCompatActivity {
         indietro = findViewById(R.id.Indietro);
     }
 
-        public void TornaIndietro(View view){
-            try {
-                Intent AccessPage = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(AccessPage);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(this, "Errore: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            }
+    public void TornaIndietro(View view){
+        try {
+            Intent AccessPage = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(AccessPage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Errore: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
 
     public void Registrati(View view) {
         String enteredNome = Name.getText().toString().trim();
@@ -62,33 +63,31 @@ public class RegistrationActivity extends AppCompatActivity {
         String enteredPassword = password.getText().toString().trim();
         String confirmPassword = confermaPassword.getText().toString().trim();
 
-        // Controllo che tutti i campi siano compilati
         if (enteredNome.isEmpty() || enteredCognome.isEmpty() || enteredNickname.isEmpty()
                 || enteredEmail.isEmpty() || enteredPassword.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "Compila tutti i campi", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Verifica che le password coincidano
         if (!enteredPassword.equals(confirmPassword)) {
             Toast.makeText(this, "Conferma password errata. Riprova", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Salvataggio dati
         try {
-            getSharedPreferences("UserPrefs", MODE_PRIVATE)
-                    .edit()
+            // Reset di SharedPreferences per evitare conflitti da registrazioni precedenti
+            SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+            prefs.edit().clear().apply();
+
+            // Salvataggio dei dati utente
+            prefs.edit()
                     .putString("email", enteredEmail)
                     .putString("password", enteredPassword)
                     .putString("nickname", enteredNickname)
+                    .putBoolean("introSignup", false)
                     .apply();
 
             Toast.makeText(this, "Registrazione completata!", Toast.LENGTH_SHORT).show();
-
-            //Valore booleano per l'intro della mascotte
-            SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-            prefs.edit().putBoolean("intro_after_signup", true).apply();
 
             // Vai alla schermata Home
             Intent homePageIntent = new Intent(getApplicationContext(), HomePage.class);
@@ -103,4 +102,3 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
 }
-

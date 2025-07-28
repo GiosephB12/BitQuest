@@ -70,6 +70,8 @@ public class ArchivioPage extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         SharedPreferences prefs = getSharedPreferences("curiosity_prefs", MODE_PRIVATE);
 
+        int unlockedCount = 0;  // contatore nozioni sbloccate
+
         for (int i = 0; i < NUM_ITEMS; i++) {
             View itemView = inflater.inflate(R.layout.grid_item, gridLayout, false);
 
@@ -86,6 +88,8 @@ public class ArchivioPage extends AppCompatActivity {
             int imageResId;
             int pos;
             if (unlocked) {
+                unlockedCount++;  // incrementa il contatore
+
                 if (i == 0) {
                     imageResId = R.drawable.ic_ibm;
                 } else if (i == 1) {
@@ -93,8 +97,9 @@ public class ArchivioPage extends AppCompatActivity {
                 } else {
                     imageResId = R.drawable.ic_lock;
                 }
+
                 image.setImageResource(imageResId);
-                pos=i;
+                pos = i;
 
                 itemView.setOnClickListener(v -> {
                     ArchivioFragment fragment = new ArchivioFragment();
@@ -113,7 +118,14 @@ public class ArchivioPage extends AppCompatActivity {
             }
             gridLayout.addView(itemView);
         }
+
+        // Salva il contatore negli SharedPreferences (UserPrefs)
+        SharedPreferences userPrefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = userPrefs.edit();
+        editor.putInt("unlocked_notions", unlockedCount);
+        editor.apply();
     }
+
 
 
     public void goBack(View view){
@@ -135,6 +147,9 @@ public class ArchivioPage extends AppCompatActivity {
         intent.putExtra("password", password);
 
         startActivity(intent);
+    }
+
+    public void goToArchivio(View view){
     }
 }
 
