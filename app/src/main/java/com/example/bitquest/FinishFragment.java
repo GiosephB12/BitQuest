@@ -37,18 +37,31 @@ public class FinishFragment extends Fragment {
         View overlay = view.findViewById(R.id.intro_overlay);
         TextView message = view.findViewById(R.id.notionText);
         Random choose = new Random();
-        int pos = choose.nextInt(2);
+        int pos = choose.nextInt(messages.length);
         message.setText(messages[pos]);
 
-        SharedPreferences prefs = requireActivity().getSharedPreferences("curiosity_prefs", MODE_PRIVATE);
+        // Recupera email e password dall'activity genitore
+        Bundle args = getActivity().getIntent().getExtras();
+        String email = args != null ? args.getString("email") : "";
+        String password = args != null ? args.getString("password") : "";
+
+        SharedPreferences prefs;
+        SharedPreferences userPrefs;
+
+        if ("admin".equals(email) && "admin".equals(password)) {
+            // SharedPreferences separati per admin
+            prefs = requireActivity().getSharedPreferences("AdminPrefs", MODE_PRIVATE);
+            userPrefs = requireActivity().getSharedPreferences("AdminPrefs", MODE_PRIVATE);
+        } else {
+            // SharedPreferences per utenti normali
+            prefs = requireActivity().getSharedPreferences("UserPrefs", MODE_PRIVATE);
+            userPrefs = requireActivity().getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        }
+
         prefs.edit().putBoolean("curiosity_" + pos, true).apply();
 
-        SharedPreferences userPrefs = requireActivity().getSharedPreferences("UserPrefs", MODE_PRIVATE);
         int backCount = userPrefs.getInt("go_back_count", 0);
         backCount++;
-        SharedPreferences.Editor editor = userPrefs.edit();
-        editor.putInt("unlocked_levels", backCount);
-        editor.apply();
-        
+        userPrefs.edit().putInt("unlocked_levels", backCount).apply();
     }
 }

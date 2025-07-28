@@ -33,16 +33,21 @@ public class ArchivioPage extends AppCompatActivity {
             return insets;
         });
 
-        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-
         Intent nicknameIntent = getIntent();
         email = nicknameIntent.getStringExtra("email");
         password = nicknameIntent.getStringExtra("password");
 
+        SharedPreferences prefs;
+        if ("admin".equals(email) && "admin".equals(password)) {
+            prefs = getSharedPreferences("AdminPrefs", MODE_PRIVATE);
+        } else {
+            prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        }
+
         TextView nickname = findViewById(R.id.nicknameText);
         String nicknamePref = prefs.getString("nickname", "");
 
-        if (email.equals("admin") && password.equals("admin")) {
+        if ("admin".equals(email) && "admin".equals(password)) {
             nickname.setText("Admin");
         } else {
             nickname.setText(nicknamePref);
@@ -52,23 +57,25 @@ public class ArchivioPage extends AppCompatActivity {
         populateGrid();
 
         ImageView logo = findViewById(R.id.logoImage);
-        logo.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ArchivioPage.this, HomePage.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("email", email); //passa email
-                intent.putExtra("password", password); //passa password
-                startActivity(intent);
-                finish();
-            }
+        logo.setOnClickListener(v -> {
+            Intent intent = new Intent(ArchivioPage.this, HomePage.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("email", email); // passa email
+            intent.putExtra("password", password); // passa password
+            startActivity(intent);
+            finish();
         });
     }
 
     private void populateGrid() {
         LayoutInflater inflater = LayoutInflater.from(this);
-        SharedPreferences prefs = getSharedPreferences("curiosity_prefs", MODE_PRIVATE);
+
+        SharedPreferences curiosityPrefs;
+        if ("admin".equals(email) && "admin".equals(password)) {
+            curiosityPrefs = getSharedPreferences("AdminPrefs", MODE_PRIVATE);
+        } else {
+            curiosityPrefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        }
 
         int unlockedCount = 0;  // contatore nozioni sbloccate
 
@@ -83,7 +90,7 @@ public class ArchivioPage extends AppCompatActivity {
             });
 
             ImageView image = itemView.findViewById(R.id.item_image);
-            boolean unlocked = prefs.getBoolean("curiosity_" + i, false);
+            boolean unlocked = curiosityPrefs.getBoolean("curiosity_" + i, false);
 
             int imageResId;
             int pos;
@@ -119,14 +126,17 @@ public class ArchivioPage extends AppCompatActivity {
             gridLayout.addView(itemView);
         }
 
-        // Salva il contatore negli SharedPreferences (UserPrefs)
-        SharedPreferences userPrefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = userPrefs.edit();
+        // Salva il contatore negli SharedPreferences (stessa logica admin/utente)
+        SharedPreferences counterPrefs;
+        if ("admin".equals(email) && "admin".equals(password)) {
+            counterPrefs = getSharedPreferences("AdminPrefs", MODE_PRIVATE);
+        } else {
+            counterPrefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        }
+        SharedPreferences.Editor editor = counterPrefs.edit();
         editor.putInt("unlocked_notions", unlockedCount);
         editor.apply();
     }
-
-
 
     public void goBack(View view){
         finish();
@@ -134,10 +144,8 @@ public class ArchivioPage extends AppCompatActivity {
 
     public void goToProfilo(View view){
         Intent ProfilePage = new Intent(getApplicationContext(), ProfiloPage.class);
-        //aggiunto per controllo nickname
         ProfilePage.putExtra("email", email);
         ProfilePage.putExtra("password", password);
-
         startActivity(ProfilePage);
     }
 
@@ -145,11 +153,9 @@ public class ArchivioPage extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), AppuntiPage.class);
         intent.putExtra("email", email);
         intent.putExtra("password", password);
-
         startActivity(intent);
     }
 
     public void goToArchivio(View view){
     }
 }
-

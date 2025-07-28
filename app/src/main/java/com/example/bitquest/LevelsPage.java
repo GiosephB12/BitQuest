@@ -48,7 +48,12 @@ public class LevelsPage extends AppCompatActivity {
         email = level.getStringExtra("email");
         password = level.getStringExtra("password");
 
-        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        SharedPreferences prefs;
+        if ("admin".equals(email) && "admin".equals(password)) {
+            prefs = getSharedPreferences("AdminPrefs", MODE_PRIVATE);
+        } else {
+            prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        }
 
         TextView titleCategory = findViewById(R.id.TitleCategory);
         TextView typePuzzle = findViewById(R.id.Type);

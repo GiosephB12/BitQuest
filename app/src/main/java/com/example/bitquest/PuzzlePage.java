@@ -73,7 +73,12 @@ public class PuzzlePage extends AppCompatActivity {
         }
 
         // Gestione nickname e credenziali
-        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        SharedPreferences prefs;
+        if ("admin".equals(email) && "admin".equals(password)) {
+            prefs = getSharedPreferences("AdminPrefs", MODE_PRIVATE);
+        } else {
+            prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        }
 
         email = intent.getStringExtra("email");
         password = intent.getStringExtra("password");

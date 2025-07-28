@@ -50,9 +50,9 @@ public class ProfiloPage extends AppCompatActivity {
         else
             nickname.setText(nicknamePref);
 
-        numNozioni.setText(String.valueOf(Utils.countUnlockedNotions(this)));
-        numAppunti.setText(String.valueOf(Utils.countUnlockedNotes(this)));
-        numLivelli.setText(String.valueOf(Utils.countUnlockedLevels(this)));
+        numNozioni.setText(String.valueOf(Utils.countUnlockedNotions(this, email, password)));
+        numAppunti.setText(String.valueOf(Utils.countUnlockedNotes(this, email, password)));
+        numLivelli.setText(String.valueOf(Utils.countUnlockedLevels(this, email, password)));
 
         ImageView logo = findViewById(R.id.logoImage);
         logo.setOnClickListener(new View.OnClickListener() {

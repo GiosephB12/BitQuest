@@ -120,12 +120,16 @@ public class AppuntiPage extends AppCompatActivity {
         }
 
         // Salva il contatore negli SharedPreferences
-        SharedPreferences userPrefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = userPrefs.edit();
+        SharedPreferences prefs;
+        if ("admin".equals(email) && "admin".equals(password)) {
+            prefs = getSharedPreferences("AdminPrefs", MODE_PRIVATE);
+        } else {
+            prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        }
+        SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("unlocked_count", unlockedCount);
         editor.apply();
     }
-
 
     public void goBack(View view){
         finish();
